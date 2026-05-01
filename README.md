@@ -1,5 +1,7 @@
 # C5 Real-Time Market Sentiment Aggregator
 
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](https://yash-market-sentiment.streamlit.app/)
+
 Research portfolio project (Yash Patel). **Not a production trading system.**
 
 Aggregates free, public news + Reddit sentiment for a watchlist of tickers,
@@ -10,6 +12,8 @@ simple long/short equity curve, Sharpe ratio, and signal-vs-returns
 correlation.
 
 ## Demo
+
+🌐 **Live demo:** [yash-market-sentiment.streamlit.app](https://yash-market-sentiment.streamlit.app/) — uses VADER scoring on cloud (FinBERT requires too much memory for free tier; local runs use FinBERT)
 
 ![Daily mean FinBERT sentiment per ticker, SPY/NVDA/TSLA](docs/sentiment-by-ticker.png)
 
