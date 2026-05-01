@@ -13,6 +13,8 @@ import streamlit as st
 
 from c5_sentiment_aggregator.aggregate import daily_sentiment, load_scored_frame, pivot_sentiment
 from c5_sentiment_aggregator.backtest import run_backtest
+from c5_sentiment_aggregator.news import ingest_news
+from c5_sentiment_aggregator.score import score_pending
 
 st.set_page_config(page_title="C5 Sentiment Aggregator", layout="wide")
 st.title("C5 Real-Time Market Sentiment Aggregator")
@@ -24,9 +26,34 @@ def _load() -> pd.DataFrame:
     return load_scored_frame()
 
 
+def _bootstrap(tickers: list[str]) -> tuple[int, int]:
+    """First-run helper: ingest news + score so the dashboard has data."""
+    news_counts = ingest_news(tickers)
+    n_scored = score_pending(backend="vader")  # vader is fast + needs no model download
+    return sum(news_counts.values()) if news_counts else 0, n_scored
+
+
 df = _load()
 if df.empty:
-    st.warning("No scored headlines yet. Run `python scripts/run_demo.py` first.")
+    st.warning("⚠️ No scored headlines in the cache yet.")
+    st.markdown(
+        "This deployed demo starts with an empty database. Click below to run a "
+        "live ingest of recent news headlines for SPY, NVDA, and TSLA, then score "
+        "them with VADER (fast, no model download). Takes ~15-30 seconds."
+    )
+    default_seed = "SPY, NVDA, TSLA"
+    seed_input = st.text_input("Tickers to seed (comma-separated)", value=default_seed)
+    if st.button("Run demo ingest now", type="primary"):
+        seed_tickers = [t.strip().upper() for t in seed_input.split(",") if t.strip()]
+        with st.spinner(f"Ingesting news for {seed_tickers} and scoring..."):
+            n_news, n_scored = _bootstrap(seed_tickers)
+        st.success(f"Ingested {n_news} headlines; scored {n_scored}. Reloading...")
+        _load.clear()
+        st.rerun()
+    st.info(
+        "Locally you can also run `python scripts/run_demo.py` for the full "
+        "pipeline (FinBERT scoring + backtest)."
+    )
     st.stop()
 
 tickers = sorted(df["ticker"].unique().tolist())
