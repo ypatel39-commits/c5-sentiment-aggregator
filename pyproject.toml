@@ -1,13 +1,35 @@
 [project]
 name = "c5-sentiment-aggregator"
 version = "0.1.0"
-description = "Yash Patel - Finance Project: c5-sentiment-aggregator"
+description = "Yash Patel - C5 Real-Time Market Sentiment Aggregator (research portfolio)"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "yfinance>=0.2.40",
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "scikit-learn>=1.4",
+    "requests>=2.31",
+    "streamlit>=1.36",
+    "plotly>=5.22",
+    "click>=8.1",
+    "sqlalchemy>=2.0",
+    "beautifulsoup4>=4.12",
+    "matplotlib>=3.8",
+    "nltk>=3.8",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
+finbert = ["transformers>=4.40", "torch>=2.2", "sentencepiece>=0.2"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src"]

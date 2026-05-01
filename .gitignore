@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# C5 project — local artifacts (do not commit cached data)
+data/*.db
+*.sqlite
+*.sqlite3
+.DS_Store
+
