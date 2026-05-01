@@ -1,0 +1,23 @@
+# Streamlit Cloud config for C5 Sentiment Aggregator.
+
+[theme]
+base = "light"
+primaryColor = "#1F6FEB"        # market-data blue
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F1F5F9"
+textColor = "#0F172A"
+font = "sans serif"
+
+[server]
+headless = true
+runOnSave = false
+enableCORS = false
+enableXsrfProtection = true
+maxUploadSize = 50
+
+[browser]
+gatherUsageStats = false
+
+[client]
+showErrorDetails = true
+toolbarMode = "minimal"

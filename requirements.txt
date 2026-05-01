@@ -1,0 +1,20 @@
+# Streamlit Cloud install target.
+# Mirrors pyproject.toml [project.dependencies]. The optional `finbert` extra
+# (transformers + torch) is intentionally OMITTED — too heavy for the 1 GB
+# free tier. The dashboard runs fine on the rule-based / NLTK VADER scorer.
+
+yfinance>=0.2.40
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.4
+requests>=2.31
+streamlit>=1.36
+plotly>=5.22
+click>=8.1
+sqlalchemy>=2.0
+beautifulsoup4>=4.12
+matplotlib>=3.8
+nltk>=3.8
+
+# Install the repo itself so `from c5_sentiment_aggregator.aggregate import ...` resolves.
+-e .
