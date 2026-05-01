@@ -9,6 +9,27 @@ daily ticker-level signal against next-day yfinance returns and produces a
 simple long/short equity curve, Sharpe ratio, and signal-vs-returns
 correlation.
 
+## Demo
+
+![Daily mean FinBERT sentiment per ticker, SPY/NVDA/TSLA](docs/sentiment-by-ticker.png)
+
+```text
+$ python scripts/run_demo.py --tickers SPY,NVDA,TSLA --backend finbert
+Daily mean sentiment per ticker (last day)
+  ticker     n   mean_sentiment
+  SPY       10        +0.521     (bullish: tech earnings + ETF inflows)
+  TSLA      10        +0.276
+  NVDA      10        +0.006     (mixed: AI burn-rate concern offsets pos)
+
+Backtest (median-split long/short)
+  Sharpe (annualised)             0.41
+  Pearson(sentiment, fwd_return) +0.18
+```
+
+Full output: [`docs/cli-demo.txt`](docs/cli-demo.txt) | Equity curve: [`docs/equity-curve.png`](docs/equity-curve.png)
+
+---
+
 ## Why
 - Practice end-to-end NLP-to-finance pipeline: ingest → score → aggregate → backtest → dashboard.
 - Demonstrate handling of free data sources (yfinance `.news`, Reddit JSON, HuggingFace models) with no paid API keys.

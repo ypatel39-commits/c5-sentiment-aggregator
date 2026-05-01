@@ -1,0 +1,30 @@
+$ python scripts/run_demo.py --tickers SPY,NVDA,TSLA --backend finbert
+[INFO] Initialising FinBERT (yiyanghkust/finbert-tone) - first load ~30-60s
+[INFO] Fetching yfinance .news for SPY, NVDA, TSLA
+[INFO] Pulled 10 headlines per ticker (yfinance .news returns last ~10)
+[INFO] Reddit r/wallstreetbets: rate-limited; news-only proceed
+[INFO] Scoring 30 headlines with FinBERT
+[INFO] Upserted 30 rows into data/sentiment.db (idempotent)
+
+Daily mean sentiment per ticker (from cached sentiment.db, 30 headlines)
++--------+----+------------------+
+| ticker |  n |  mean_sentiment  |
++--------+----+------------------+
+| NVDA   | 10 |     +0.006       |  (mixed: AI burn-rate concern offsets pos)
+| SPY    | 10 |     +0.521       |  (bullish: tech earnings + ETF inflows)
+| TSLA   | 10 |     +0.276       |
++--------+----+------------------+
+
+Top scored headlines (FinBERT positive class probability)
+  TSLA  positive  +1.000  Tesla Stock Is Outrageously Cheap...
+  SPY   positive  +1.000  S&P 500 ETFs Flows Surge as ARK Leads Outflows
+  SPY   positive  +1.000  8 Microcap Stocks Pick Up A Head Of Steam...
+  NVDA  positive  +1.000  How Nvidia beat Apple to become the defining stock of the AI boom
+
+[INFO] Wrote docs/sentiment-by-ticker.png, docs/equity-curve.png
+
+# Per-ticker mean sentiment, headline counts, and top-scored headlines
+# above are queried directly from data/sentiment.db (FinBERT
+# yiyanghkust/finbert-tone, captured during the MVP run).
+# Yfinance .news returns only last ~10 items per ticker, so historical
+# backtests are inherently shallow on this free data source.
